@@ -90,14 +90,14 @@ type FieldsetProps = {
 function Fieldset({ label, options, value, onChange }: FieldsetProps) {
   return (
     <fieldset>
-      <legend className="mb-3 text-sm font-semibold text-zinc-950">{label}</legend>
+      <legend className="mb-3 text-sm font-semibold text-zinc-50">{label}</legend>
       <div className="grid gap-2 sm:grid-cols-2">
         {options.map((option) => (
           <label
             className={`flex min-h-12 cursor-pointer items-center rounded-md border px-3 text-sm font-medium transition ${
               value === option
-                ? "border-zinc-950 bg-zinc-950 text-white"
-                : "border-zinc-200 bg-white text-zinc-700 hover:border-zinc-400"
+                ? "border-emerald-400 bg-emerald-400/15 text-emerald-100"
+                : "border-zinc-800 bg-zinc-900 text-zinc-200 hover:border-zinc-600"
             }`}
             key={option}
           >

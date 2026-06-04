@@ -21,27 +21,45 @@ export function QuestionCard({
     <Card>
       <div className="space-y-6">
         <div>
-          <p className="text-sm font-semibold text-zinc-500">{question.category}</p>
-          <h1 className="mt-2 text-2xl font-semibold leading-snug text-zinc-950">
+          <p className="text-sm font-semibold text-emerald-300">{question.category}</p>
+          <h1 className="mt-2 text-2xl font-semibold leading-snug text-zinc-50">
             {question.prompt}
           </h1>
         </div>
 
         <div className="grid gap-3">
-          {question.options.map((option) => (
-            <button
-              className={`rounded-md border p-4 text-left text-sm font-medium transition ${
-                selectedAnswerId === option.id
-                  ? "border-zinc-950 bg-zinc-950 text-white"
-                  : "border-zinc-200 bg-white text-zinc-700 hover:border-zinc-400"
-              }`}
-              key={option.id}
-              onClick={() => onSelect(option.id)}
-              type="button"
-            >
-              {option.text}
-            </button>
-          ))}
+          {question.options.map((option) => {
+            const hasSelection = Boolean(selectedAnswerId);
+            const isSelected = selectedAnswerId === option.id;
+            const isCorrect = question.correctAnswerId === option.id;
+            const feedback =
+              hasSelection && isCorrect
+                ? "border-emerald-400 bg-emerald-400/15 text-emerald-100"
+                : hasSelection && isSelected
+                  ? "border-rose-400 bg-rose-400/15 text-rose-100"
+                  : "border-zinc-800 bg-zinc-900 text-zinc-200 hover:border-zinc-600";
+
+            return (
+              <button
+                className={`flex min-h-14 items-center justify-between gap-3 rounded-md border p-4 text-left text-sm font-medium transition ${feedback}`}
+                key={option.id}
+                onClick={() => onSelect(option.id)}
+                type="button"
+              >
+                <span>{option.text}</span>
+                {hasSelection && isCorrect ? (
+                  <span className="shrink-0 rounded-full bg-emerald-400 px-2 py-1 text-xs font-bold text-zinc-950">
+                    Right
+                  </span>
+                ) : null}
+                {hasSelection && isSelected && !isCorrect ? (
+                  <span className="shrink-0 rounded-full bg-rose-400 px-2 py-1 text-xs font-bold text-zinc-950">
+                    Wrong
+                  </span>
+                ) : null}
+              </button>
+            );
+          })}
         </div>
 
         <Button disabled={!selectedAnswerId} onClick={onNext} type="button">

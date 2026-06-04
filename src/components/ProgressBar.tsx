@@ -8,15 +8,15 @@ export function ProgressBar({ current, total }: ProgressBarProps) {
 
   return (
     <div aria-label={`Question ${current} of ${total}`} className="space-y-2">
-      <div className="flex items-center justify-between text-sm font-medium text-zinc-600">
+      <div className="flex items-center justify-between text-sm font-medium text-zinc-400">
         <span>
           Question {current}/{total}
         </span>
         <span>{progress}%</span>
       </div>
-      <div className="h-2 overflow-hidden rounded-full bg-zinc-200">
+      <div className="h-2 overflow-hidden rounded-full bg-zinc-800">
         <div
-          className="h-full rounded-full bg-zinc-950 transition-all"
+          className="h-full rounded-full bg-emerald-400 transition-all"
           style={{ width: `${progress}%` }}
         />
       </div>

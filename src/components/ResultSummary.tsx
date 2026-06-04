@@ -10,23 +10,23 @@ export function ResultSummary({ result }: ResultSummaryProps) {
     <Card>
       <div className="grid gap-4 sm:grid-cols-3">
         <div>
-          <p className="text-sm font-medium text-zinc-500">Score</p>
-          <p className="mt-1 text-3xl font-semibold text-zinc-950">
+          <p className="text-sm font-medium text-zinc-400">Score</p>
+          <p className="mt-1 text-3xl font-semibold text-zinc-50">
             {result.score} / {result.total}
           </p>
         </div>
         <div>
-          <p className="text-sm font-medium text-zinc-500">Rank</p>
-          <p className="mt-1 text-2xl font-semibold text-zinc-950">{result.rank}</p>
+          <p className="text-sm font-medium text-zinc-400">Rank</p>
+          <p className="mt-1 text-2xl font-semibold text-zinc-50">{result.rank}</p>
         </div>
         <div>
-          <p className="text-sm font-medium text-zinc-500">Weak Areas</p>
-          <p className="mt-1 text-base font-semibold text-zinc-950">
+          <p className="text-sm font-medium text-zinc-400">Weak Areas</p>
+          <p className="mt-1 text-base font-semibold text-zinc-50">
             {result.weakAreas.length > 0 ? result.weakAreas.join(", ") : "None"}
           </p>
         </div>
       </div>
-      <p className="mt-5 border-t border-zinc-200 pt-5 text-sm leading-6 text-zinc-600">
+      <p className="mt-5 border-t border-zinc-800 pt-5 text-sm leading-6 text-zinc-400">
         {result.recommendation}
       </p>
     </Card>
