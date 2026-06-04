@@ -12,7 +12,7 @@ export type Goal =
   | "Interview prep"
   | "Stay sharp"
   | "Find weak areas"
-  | "Daily challenge";
+  | "Daily warm-up";
 
 export type Profile = {
   role: Role;
@@ -67,7 +67,11 @@ export type AnswerReview = {
   category: QuestionCategory;
 };
 
-export type Rank = "Rusty" | "Warming Up" | "Still in the Game" | "Sharp";
+export type Rank =
+  | "Needs Refreshing"
+  | "Building Momentum"
+  | "Solid Today"
+  | "Feeling Sharp";
 
 export type QuizResult = {
   date: string;

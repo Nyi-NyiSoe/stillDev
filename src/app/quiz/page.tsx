@@ -6,7 +6,7 @@ import { AppShell } from "@/components/AppShell";
 import { ButtonLink } from "@/components/Button";
 import { QuestionCard } from "@/components/QuestionCard";
 import { ProgressBar } from "@/components/ProgressBar";
-import { getOrCreateDailyQuiz, getQuestionsByIds } from "@/lib/quiz";
+import { getOrCreateDailyQuiz, getQuestionsForQuiz } from "@/lib/quiz";
 import { scoreQuiz } from "@/lib/scoring";
 import {
   getDailyQuiz,
@@ -23,11 +23,17 @@ export default function QuizPage() {
   const quiz = useSyncExternalStore(subscribeToStorage, getDailyQuiz, () => null);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [selectedAnswerId, setSelectedAnswerId] = useState<string | null>(null);
+  const [isAnswerChecked, setIsAnswerChecked] = useState(false);
   const quizQuestions = useMemo(
-    () => (quiz ? getQuestionsByIds(quiz.questionIds) : []),
+    () => (quiz ? getQuestionsForQuiz(quiz) : []),
     [quiz],
   );
   const currentQuestion = quizQuestions[questionIndex] ?? null;
+  const savedAnswerId = currentQuestion
+    ? getQuizAnswers()[currentQuestion.id] ?? null
+    : null;
+  const activeAnswerId = selectedAnswerId ?? savedAnswerId;
+  const activeAnswerChecked = isAnswerChecked || Boolean(savedAnswerId);
 
   useEffect(() => {
     if (!profile) {
@@ -40,26 +46,31 @@ export default function QuizPage() {
     }
   }, [profile, quiz, router]);
 
-  function handleNext() {
-    if (!profile || !quiz || !currentQuestion || !selectedAnswerId) {
+  function handleCheckAnswer() {
+    if (!currentQuestion || !activeAnswerId) {
       return;
     }
 
-    saveQuizAnswer(currentQuestion.id, selectedAnswerId);
+    saveQuizAnswer(currentQuestion.id, activeAnswerId);
+    setIsAnswerChecked(true);
+  }
+
+  function handleNext() {
+    if (!profile || !quiz || !currentQuestion || !activeAnswerId || !activeAnswerChecked) {
+      return;
+    }
 
     if (questionIndex < quizQuestions.length - 1) {
-      const nextQuestion = quizQuestions[questionIndex + 1];
       setQuestionIndex((current) => current + 1);
-      setSelectedAnswerId(
-        nextQuestion ? getQuizAnswers()[nextQuestion.id] ?? null : null,
-      );
+      setSelectedAnswerId(null);
+      setIsAnswerChecked(false);
       return;
     }
 
     const result = scoreQuiz({
       answers: {
         ...getQuizAnswers(),
-        [currentQuestion.id]: selectedAnswerId,
+        [currentQuestion.id]: activeAnswerId,
       },
       date: quiz.date,
       profile,
@@ -74,7 +85,9 @@ export default function QuizPage() {
     return (
       <AppShell eyebrow="Quiz">
         <div className="flex flex-1 items-center justify-center py-12">
-          <p className="text-sm font-medium text-zinc-400">Preparing today&apos;s check...</p>
+          <p className="text-sm font-medium text-zinc-400">
+            Preparing today&apos;s warm-up from your saved profile...
+          </p>
         </div>
       </AppShell>
     );
@@ -85,16 +98,13 @@ export default function QuizPage() {
       <div className="mx-auto flex w-full max-w-3xl flex-1 flex-col justify-center gap-6 py-8">
         <ProgressBar current={questionIndex + 1} total={quizQuestions.length} />
         <QuestionCard
+          isAnswerChecked={activeAnswerChecked}
           isFinalQuestion={questionIndex === quizQuestions.length - 1}
+          onCheck={handleCheckAnswer}
           onNext={handleNext}
-          onSelect={(answerId) => {
-            saveQuizAnswer(currentQuestion.id, answerId);
-            setSelectedAnswerId(answerId);
-          }}
+          onSelect={setSelectedAnswerId}
           question={currentQuestion}
-          selectedAnswerId={
-            selectedAnswerId ?? getQuizAnswers()[currentQuestion.id] ?? null
-          }
+          selectedAnswerId={activeAnswerId}
         />
         <div className="flex justify-center">
           <ButtonLink href="/" variant="ghost">
