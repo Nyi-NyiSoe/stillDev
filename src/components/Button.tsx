@@ -5,11 +5,11 @@ type Variant = "primary" | "secondary" | "ghost";
 
 const variants: Record<Variant, string> = {
   primary:
-    "border-zinc-950 bg-zinc-950 text-white hover:bg-zinc-800 focus-visible:outline-zinc-950",
+    "border-emerald-400 bg-emerald-400 text-zinc-950 hover:bg-emerald-300 focus-visible:outline-emerald-300",
   secondary:
-    "border-zinc-300 bg-white text-zinc-950 hover:border-zinc-400 hover:bg-zinc-50 focus-visible:outline-zinc-700",
+    "border-zinc-600 bg-zinc-900 text-zinc-100 hover:border-zinc-400 hover:bg-zinc-800 focus-visible:outline-zinc-400",
   ghost:
-    "border-transparent bg-transparent text-zinc-700 hover:bg-zinc-100 focus-visible:outline-zinc-700",
+    "border-transparent bg-transparent text-zinc-300 hover:bg-zinc-900 focus-visible:outline-zinc-400",
 };
 
 const base =

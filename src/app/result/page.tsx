@@ -27,7 +27,7 @@ export default function ResultPage() {
     return (
       <AppShell eyebrow="Result">
         <div className="flex flex-1 items-center justify-center py-12">
-          <p className="text-sm font-medium text-zinc-600">Loading result...</p>
+          <p className="text-sm font-medium text-zinc-400">Loading result...</p>
         </div>
       </AppShell>
     );
@@ -49,16 +49,16 @@ export default function ResultPage() {
               );
 
               return (
-                <div className="border-b border-zinc-200 pb-5 last:border-0 last:pb-0" key={answer.questionId}>
-                  <p className="text-sm font-semibold text-zinc-500">Question {index + 1}</p>
-                  <h2 className="mt-2 text-base font-semibold text-zinc-950">
+                <div className="border-b border-zinc-800 pb-5 last:border-0 last:pb-0" key={answer.questionId}>
+                  <p className="text-sm font-semibold text-zinc-400">Question {index + 1}</p>
+                  <h2 className="mt-2 text-base font-semibold text-zinc-50">
                     {question?.prompt}
                   </h2>
-                  <div className="mt-3 space-y-1 text-sm text-zinc-700">
+                  <div className="mt-3 space-y-1 text-sm text-zinc-300">
                     <p>Selected: {selected?.text ?? "No answer"}</p>
                     <p>Correct: {correct?.text}</p>
                   </div>
-                  <p className="mt-3 text-sm leading-6 text-zinc-600">
+                  <p className="mt-3 text-sm leading-6 text-zinc-400">
                     {question?.explanation}
                   </p>
                 </div>

@@ -74,7 +74,7 @@ export default function QuizPage() {
     return (
       <AppShell eyebrow="Quiz">
         <div className="flex flex-1 items-center justify-center py-12">
-          <p className="text-sm font-medium text-zinc-600">Preparing today&apos;s check...</p>
+          <p className="text-sm font-medium text-zinc-400">Preparing today&apos;s check...</p>
         </div>
       </AppShell>
     );
