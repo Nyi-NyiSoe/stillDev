@@ -19,7 +19,7 @@ const goals: Goal[] = [
   "Interview prep",
   "Stay sharp",
   "Find weak areas",
-  "Daily challenge",
+  "Daily warm-up",
 ];
 
 type ProfileFormProps = {
@@ -74,7 +74,7 @@ export function ProfileForm({ initialProfile, onSubmit }: ProfileFormProps) {
         onChange={(value) => updateProfile("goal", value as Goal)}
       />
       <Button type="submit" className="w-full sm:w-auto">
-        Continue to Questions
+        Start Warm-up
       </Button>
     </form>
   );
@@ -94,7 +94,7 @@ function Fieldset({ label, options, value, onChange }: FieldsetProps) {
       <div className="grid gap-2 sm:grid-cols-2">
         {options.map((option) => (
           <label
-            className={`flex min-h-12 cursor-pointer items-center rounded-md border px-3 text-sm font-medium transition ${
+            className={`flex min-h-12 cursor-pointer items-center rounded-md border px-3 text-sm font-medium transition focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-emerald-300 ${
               value === option
                 ? "border-emerald-400 bg-emerald-400/15 text-emerald-100"
                 : "border-zinc-800 bg-zinc-900 text-zinc-200 hover:border-zinc-600"

@@ -4,7 +4,7 @@ import {
   getDailyQuiz,
   saveDailyQuiz,
 } from "@/lib/storage";
-import type { DailyQuiz, Profile, Question } from "@/types/quiz";
+import type { AnswerOption, DailyQuiz, Profile, Question } from "@/types/quiz";
 
 const QUIZ_SIZE = 10;
 
@@ -17,6 +17,16 @@ export function getQuestionsByIds(questionIds: string[]) {
   return questionIds
     .map((questionId) => byId.get(questionId))
     .filter((question): question is Question => Boolean(question));
+}
+
+export function getQuestionsForQuiz(quiz: DailyQuiz) {
+  return getQuestionsByIds(quiz.questionIds).map((question) => ({
+    ...question,
+    options: shuffleAnswerOptions(
+      question.options,
+      `${quiz.date}|${quiz.profileKey}|${question.id}|options`,
+    ),
+  }));
 }
 
 export function generateDailyQuiz(profile: Profile, date = getTodayKey()): DailyQuiz {
@@ -63,6 +73,10 @@ function getCandidateQuestions(profile: Profile) {
     ...stackQuestions,
     ...questions.filter((question) => question.stack !== profile.stack),
   ];
+}
+
+function shuffleAnswerOptions(options: AnswerOption[], seed: string) {
+  return seededShuffle(options, seed);
 }
 
 function seededShuffle<T>(items: T[], seed: string) {

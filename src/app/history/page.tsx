@@ -15,13 +15,24 @@ export default function HistoryPage() {
         <div>
           <h1 className="text-3xl font-semibold text-zinc-50">History</h1>
           <p className="mt-2 text-sm leading-6 text-zinc-400">
-            Past quiz results saved in this browser.
+            Past warm-up results saved in this browser.
           </p>
         </div>
 
         <Card>
           {history.length === 0 ? (
-            <p className="text-sm text-zinc-400">No history yet.</p>
+            <div className="space-y-4">
+              <div>
+                <h2 className="text-xl font-semibold text-zinc-50">
+                  No warm-ups saved yet
+                </h2>
+                <p className="mt-2 text-sm leading-6 text-zinc-400">
+                  Finish today&apos;s check and StillDev will keep the result here
+                  in this browser.
+                </p>
+              </div>
+              <ButtonLink href="/">Take Today&apos;s Check</ButtonLink>
+            </div>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full min-w-[38rem] text-left text-sm">
@@ -31,7 +42,7 @@ export default function HistoryPage() {
                     <th className="py-3 font-semibold">Stack</th>
                     <th className="py-3 font-semibold">Level</th>
                     <th className="py-3 font-semibold">Score</th>
-                    <th className="py-3 font-semibold">Rank</th>
+                    <th className="py-3 font-semibold">Status</th>
                   </tr>
                 </thead>
                 <tbody>

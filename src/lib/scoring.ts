@@ -51,18 +51,18 @@ export function scoreQuiz({
 
 export function getRank(score: number): Rank {
   if (score <= 3) {
-    return "Rusty";
+    return "Needs Refreshing";
   }
 
   if (score <= 6) {
-    return "Warming Up";
+    return "Building Momentum";
   }
 
   if (score <= 8) {
-    return "Still in the Game";
+    return "Solid Today";
   }
 
-  return "Sharp";
+  return "Feeling Sharp";
 }
 
 function getWeakAreas(answerReviews: AnswerReview[]) {
@@ -90,8 +90,8 @@ function getRecommendation(
   }
 
   if (score === total) {
-    return "You cleared today's check. Keep the streak going tomorrow.";
+    return "You cleared today's check. Come back tomorrow for a fresh warm-up.";
   }
 
-  return "Review the explanations, then take another daily check tomorrow.";
+  return "Review the explanations, then come back tomorrow for a fresh warm-up.";
 }
