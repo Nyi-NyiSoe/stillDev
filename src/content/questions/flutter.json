@@ -1,0 +1,422 @@
+[
+  {
+    "id": "flutter-001",
+    "stack": "Flutter",
+    "level": "Beginner",
+    "category": "UI/Layout",
+    "prompt": "A settings screen works on a tall phone but overflows on a smaller device when the keyboard opens. What layout decision prevents this?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Make the content scrollable within the available height."
+      },
+      {
+        "id": "b",
+        "text": "Replace every Text widget with an Icon."
+      },
+      {
+        "id": "c",
+        "text": "Remove MaterialApp."
+      },
+      {
+        "id": "d",
+        "text": "Put every widget update inside setState."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "Small screens and keyboards reduce available height. Scrollable content can handle overflow instead of clipping.",
+    "whyDevelopersMissThis": "They test on one device size and forget keyboard and small-screen constraints."
+  },
+  {
+    "id": "flutter-002",
+    "stack": "Flutter",
+    "level": "Beginner",
+    "category": "State Management",
+    "prompt": "A Dart value is assigned after loading user settings and should not be reassigned afterward. Which declaration best communicates that?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Use final because the value is assigned once at runtime."
+      },
+      {
+        "id": "b",
+        "text": "Use const because every loaded setting is compile-time known."
+      },
+      {
+        "id": "c",
+        "text": "Use var because final values cannot come from async work."
+      },
+      {
+        "id": "d",
+        "text": "Make the value nullable by default."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "final allows one runtime assignment. const is for compile-time constants.",
+    "whyDevelopersMissThis": "They mix up runtime single assignment with compile-time constants."
+  },
+  {
+    "id": "flutter-003",
+    "stack": "Flutter",
+    "level": "Junior",
+    "category": "State Management",
+    "prompt": "A StatefulWidget updates a field, but the UI does not change. What is likely missing?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Calling setState around the state change."
+      },
+      {
+        "id": "b",
+        "text": "Adding another Scaffold."
+      },
+      {
+        "id": "c",
+        "text": "Changing the app icon."
+      },
+      {
+        "id": "d",
+        "text": "Using a longer widget name."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "setState tells Flutter that state changed and the widget subtree should rebuild.",
+    "whyDevelopersMissThis": "They change a field and assume Flutter observes the mutation automatically."
+  },
+  {
+    "id": "flutter-004",
+    "stack": "Flutter",
+    "level": "Junior",
+    "category": "UI/Layout",
+    "prompt": "A Row contains a title and a trailing button. Long titles overflow instead of using only the remaining space. What should change?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Constrain the title area with Expanded or Flexible."
+      },
+      {
+        "id": "b",
+        "text": "Put the button inside Opacity."
+      },
+      {
+        "id": "c",
+        "text": "Add a second Row inside every child."
+      },
+      {
+        "id": "d",
+        "text": "Increase the app theme size."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "Flex layouts need constraints when one child should take remaining horizontal space.",
+    "whyDevelopersMissThis": "They expect text to shrink naturally, but a Row gives children room unless constrained."
+  },
+  {
+    "id": "flutter-005",
+    "stack": "Flutter",
+    "level": "Mid-level",
+    "category": "Performance",
+    "prompt": "A long list builds all rows upfront and feels slow. Which approach should be preferred?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Build visible rows lazily with a builder-style list."
+      },
+      {
+        "id": "b",
+        "text": "Use a Column with every row."
+      },
+      {
+        "id": "c",
+        "text": "Place each row in a Stack with Positioned."
+      },
+      {
+        "id": "d",
+        "text": "Wrap each row in more Containers only."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "Lazy list building avoids creating every row at once and keeps the initial render smaller.",
+    "whyDevelopersMissThis": "The simple Column version works with sample data, then struggles with real list sizes."
+  },
+  {
+    "id": "flutter-006",
+    "stack": "Flutter",
+    "level": "Mid-level",
+    "category": "Async",
+    "prompt": "A Future completes after a widget is disposed and setState throws. What should you check before updating state?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Whether the State object is still mounted."
+      },
+      {
+        "id": "b",
+        "text": "Whether debugShowCheckedModeBanner is false."
+      },
+      {
+        "id": "c",
+        "text": "Whether the screen width changed."
+      },
+      {
+        "id": "d",
+        "text": "Whether the app version string exists."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "mounted confirms the State object is still in the tree before updating it after async work.",
+    "whyDevelopersMissThis": "Async callbacks outlive screens, especially during fast navigation."
+  },
+  {
+    "id": "flutter-007",
+    "stack": "Flutter",
+    "level": "Senior",
+    "category": "Architecture Tradeoffs",
+    "prompt": "A widget mixes networking, parsing, and UI rendering. What is the main maintainability issue?",
+    "options": [
+      {
+        "id": "a",
+        "text": "It couples unrelated responsibilities and is harder to test."
+      },
+      {
+        "id": "b",
+        "text": "Flutter forbids widgets from importing services."
+      },
+      {
+        "id": "c",
+        "text": "Dart cannot parse JSON."
+      },
+      {
+        "id": "d",
+        "text": "The widget tree becomes invisible."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "Separating data work from rendering keeps widgets focused and easier to test.",
+    "whyDevelopersMissThis": "The first version is fast to build in one widget, but the cost appears when behavior grows."
+  },
+  {
+    "id": "flutter-008",
+    "stack": "Flutter",
+    "level": "Senior",
+    "category": "Debugging",
+    "prompt": "A TextField loses its text when list rows reorder. What should you inspect first?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Whether each row has a stable Key."
+      },
+      {
+        "id": "b",
+        "text": "Whether the app uses too many colors."
+      },
+      {
+        "id": "c",
+        "text": "Whether the keyboard is installed."
+      },
+      {
+        "id": "d",
+        "text": "Whether TextField supports strings."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "Stable keys preserve state identity when widgets move in a list.",
+    "whyDevelopersMissThis": "The UI looks correct until stateful rows move, which exposes identity bugs."
+  },
+  {
+    "id": "flutter-009",
+    "stack": "Flutter",
+    "level": "Junior",
+    "category": "Debugging",
+    "prompt": "A profile field may be null. You want to show a fallback label only when it is null, not when it is an empty string. What should the code use?",
+    "options": [
+      {
+        "id": "a",
+        "text": "A null-coalescing fallback."
+      },
+      {
+        "id": "b",
+        "text": "A boolean AND expression."
+      },
+      {
+        "id": "c",
+        "text": "An addition assignment."
+      },
+      {
+        "id": "d",
+        "text": "A function arrow by itself."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "A null-coalescing fallback uses the fallback only for null, not for every falsy-looking value.",
+    "whyDevelopersMissThis": "They treat null, empty string, false, and zero as the same kind of missing value."
+  },
+  {
+    "id": "flutter-010",
+    "stack": "Flutter",
+    "level": "Mid-level",
+    "category": "State Management",
+    "prompt": "A parent widget needs to update when a child button is tapped. What is the usual lightweight pattern?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Pass a callback from parent to child."
+      },
+      {
+        "id": "b",
+        "text": "Have the child edit the parent file."
+      },
+      {
+        "id": "c",
+        "text": "Read the parent widget through reflection."
+      },
+      {
+        "id": "d",
+        "text": "Restart the entire app."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "Callbacks keep data flow explicit while allowing children to notify parents about events.",
+    "whyDevelopersMissThis": "They look for shared state too early when a direct parent-child callback is enough."
+  },
+  {
+    "id": "flutter-011",
+    "stack": "Flutter",
+    "level": "Mid-level",
+    "category": "Async",
+    "prompt": "A screen shows data for the previous tab after users switch tabs quickly. What should you guard against?",
+    "options": [
+      {
+        "id": "a",
+        "text": "An older async result updating state after the active tab changed."
+      },
+      {
+        "id": "b",
+        "text": "The tab label being too short."
+      },
+      {
+        "id": "c",
+        "text": "The widget tree having too few Containers."
+      },
+      {
+        "id": "d",
+        "text": "The app icon not matching the tab."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "Async results can arrive after the user has moved on. The UI should verify the result still belongs to the current state.",
+    "whyDevelopersMissThis": "They test tabs slowly and do not reproduce out-of-order completion."
+  },
+  {
+    "id": "flutter-012",
+    "stack": "Flutter",
+    "level": "Junior",
+    "category": "API Handling",
+    "prompt": "A retry button starts a second load while the first load is still running, and the screen flickers between states. What should the UI track?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Whether a request is already in flight."
+      },
+      {
+        "id": "b",
+        "text": "Whether the retry button has an icon."
+      },
+      {
+        "id": "c",
+        "text": "Whether the background color changed."
+      },
+      {
+        "id": "d",
+        "text": "Whether the route name is uppercase."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "Pending state lets the UI prevent overlapping loads or intentionally handle them.",
+    "whyDevelopersMissThis": "They test retry after failure, not while the first request is still pending."
+  },
+  {
+    "id": "flutter-013",
+    "stack": "Flutter",
+    "level": "Mid-level",
+    "category": "State Management",
+    "prompt": "A multi-step form lets users go back and change step 1, but step 3 still uses choices from the old answer. What should the flow do?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Invalidate or recompute downstream state when earlier choices change."
+      },
+      {
+        "id": "b",
+        "text": "Prevent users from going back."
+      },
+      {
+        "id": "c",
+        "text": "Keep all later answers no matter what changed."
+      },
+      {
+        "id": "d",
+        "text": "Store every step in unrelated variables."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "Earlier decisions can make later data invalid. Dependent downstream values should be cleared, recomputed, or confirmed.",
+    "whyDevelopersMissThis": "They build each step independently instead of modeling dependencies across the flow."
+  },
+  {
+    "id": "flutter-014",
+    "stack": "Flutter",
+    "level": "Senior",
+    "category": "Performance",
+    "prompt": "A screen rebuilds an expensive chart every time a small unrelated toggle changes. What should you consider?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Separate the expensive subtree or cache derived chart data."
+      },
+      {
+        "id": "b",
+        "text": "Remove the toggle label."
+      },
+      {
+        "id": "c",
+        "text": "Increase the animation duration."
+      },
+      {
+        "id": "d",
+        "text": "Wrap the whole app in one state object."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "Expensive UI should not rebuild just because unrelated state changed. Isolate rebuild scope or cache derived work.",
+    "whyDevelopersMissThis": "They think about whether the UI is correct before checking how much work each state change triggers."
+  },
+  {
+    "id": "flutter-015",
+    "stack": "Flutter",
+    "level": "Senior",
+    "category": "Debugging",
+    "prompt": "A list item delete action sometimes removes the wrong row after filtering. What is the likely root cause?",
+    "options": [
+      {
+        "id": "a",
+        "text": "The delete action uses the visible index instead of a stable item id."
+      },
+      {
+        "id": "b",
+        "text": "The row height is too small."
+      },
+      {
+        "id": "c",
+        "text": "The filter label is too long."
+      },
+      {
+        "id": "d",
+        "text": "The list needs more padding."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "Indexes change when lists are filtered, sorted, or paginated. Mutations should target stable identifiers.",
+    "whyDevelopersMissThis": "Visible indexes feel convenient, but they are not stable business identity."
+  }
+]

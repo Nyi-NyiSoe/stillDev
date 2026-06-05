@@ -1,0 +1,422 @@
+[
+  {
+    "id": "js-001",
+    "stack": "JavaScript",
+    "level": "Beginner",
+    "category": "State Management",
+    "prompt": "A teammate uses const user = { name: 'A' }, then changes user.name. Why does this still work?",
+    "options": [
+      {
+        "id": "a",
+        "text": "const prevents rebinding the variable, not mutating the object."
+      },
+      {
+        "id": "b",
+        "text": "const is ignored for objects."
+      },
+      {
+        "id": "c",
+        "text": "Objects become immutable only in production."
+      },
+      {
+        "id": "d",
+        "text": "Mutation only works inside functions."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "The binding is constant, but the object value can still be changed unless it is frozen or otherwise protected.",
+    "whyDevelopersMissThis": "They confuse variable binding immutability with value immutability."
+  },
+  {
+    "id": "js-002",
+    "stack": "JavaScript",
+    "level": "Beginner",
+    "category": "Debugging",
+    "prompt": "A filter treats the string '0' and the number 0 as the same id, so the wrong item is selected. What should change?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Compare values with strict equality after normalizing expected types."
+      },
+      {
+        "id": "b",
+        "text": "Sort the list before filtering."
+      },
+      {
+        "id": "c",
+        "text": "Convert the id to a CSS class."
+      },
+      {
+        "id": "d",
+        "text": "Use assignment inside the comparison."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "Loose equality can coerce different types into a match. Use strict comparison with a deliberate type strategy.",
+    "whyDevelopersMissThis": "Coercion bugs hide until data arrives from forms, URLs, or APIs as strings."
+  },
+  {
+    "id": "js-003",
+    "stack": "JavaScript",
+    "level": "Junior",
+    "category": "Async",
+    "prompt": "A function using await throws, but the caller never catches it. What does the async function return?",
+    "options": [
+      {
+        "id": "a",
+        "text": "A rejected Promise."
+      },
+      {
+        "id": "b",
+        "text": "undefined with a console warning only."
+      },
+      {
+        "id": "c",
+        "text": "A string error message."
+      },
+      {
+        "id": "d",
+        "text": "A blocked thread."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "Errors thrown in async functions become rejected Promises that callers must await or catch.",
+    "whyDevelopersMissThis": "Thrown errors look synchronous in the function body, but async changes how callers receive failures."
+  },
+  {
+    "id": "js-004",
+    "stack": "JavaScript",
+    "level": "Junior",
+    "category": "Debugging",
+    "prompt": "A callback created inside a loop logs the final value every time when var is used. What fixes the captured value?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Use let for the loop variable so each iteration has its own binding."
+      },
+      {
+        "id": "b",
+        "text": "Use parseInt on the loop variable."
+      },
+      {
+        "id": "c",
+        "text": "Move the callback to CSS."
+      },
+      {
+        "id": "d",
+        "text": "Set the variable to null first."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "let creates a new block-scoped binding for each loop iteration, which closures capture correctly.",
+    "whyDevelopersMissThis": "The callback runs later, after the loop has already changed the shared var binding."
+  },
+  {
+    "id": "js-005",
+    "stack": "JavaScript",
+    "level": "Mid-level",
+    "category": "Performance",
+    "prompt": "A scroll handler performs expensive layout work on every event and the page stutters. What is a common mitigation?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Throttle the handler or schedule work with requestAnimationFrame."
+      },
+      {
+        "id": "b",
+        "text": "Wrap the handler in JSON.stringify."
+      },
+      {
+        "id": "c",
+        "text": "Make every variable global."
+      },
+      {
+        "id": "d",
+        "text": "Use alert to slow events down."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "Throttling or frame scheduling limits work to a manageable cadence and reduces layout pressure.",
+    "whyDevelopersMissThis": "They optimize the work itself before reducing how often it runs."
+  },
+  {
+    "id": "js-006",
+    "stack": "JavaScript",
+    "level": "Mid-level",
+    "category": "Async",
+    "prompt": "A page needs user details, feature flags, and notifications. None depends on the others. What fetch strategy avoids unnecessary waiting?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Start the requests together and wait for all of them."
+      },
+      {
+        "id": "b",
+        "text": "Await each request one after another."
+      },
+      {
+        "id": "c",
+        "text": "Run the requests from a timer."
+      },
+      {
+        "id": "d",
+        "text": "Fetch notifications only after a reload."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "Independent async work can run concurrently. Sequential awaits add latency when there is no dependency.",
+    "whyDevelopersMissThis": "They write code in the order they think about the data, which can accidentally serialize independent work."
+  },
+  {
+    "id": "js-007",
+    "stack": "JavaScript",
+    "level": "Senior",
+    "category": "Architecture Tradeoffs",
+    "prompt": "A module exposes a mutable singleton config used across tests. What is the main risk?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Tests and features can leak state into each other."
+      },
+      {
+        "id": "b",
+        "text": "The module cannot export functions."
+      },
+      {
+        "id": "c",
+        "text": "Objects stop supporting properties."
+      },
+      {
+        "id": "d",
+        "text": "Imports become asynchronous automatically."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "Shared mutable module state creates hidden coupling and can make behavior order-dependent.",
+    "whyDevelopersMissThis": "Singletons feel convenient until one caller changes state that another caller assumes is clean."
+  },
+  {
+    "id": "js-008",
+    "stack": "JavaScript",
+    "level": "Senior",
+    "category": "Debugging",
+    "prompt": "An object method is passed as a callback and this becomes undefined when the callback runs. What is a typical fix?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Bind the method or wrap the call in an arrow function."
+      },
+      {
+        "id": "b",
+        "text": "Rename this to self in every file."
+      },
+      {
+        "id": "c",
+        "text": "Make the object an array."
+      },
+      {
+        "id": "d",
+        "text": "Use Math.random before the call."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "Passing a method detaches it from its receiver. Binding or wrapping preserves the intended receiver.",
+    "whyDevelopersMissThis": "The method works when called directly, so the bug only appears after it is handed to another API."
+  },
+  {
+    "id": "js-009",
+    "stack": "JavaScript",
+    "level": "Junior",
+    "category": "Debugging",
+    "prompt": "A search result list should show all active users, but it only shows one. The code uses find. What should change?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Use filter so every matching user is returned."
+      },
+      {
+        "id": "b",
+        "text": "Use forEach because it returns matching items."
+      },
+      {
+        "id": "c",
+        "text": "Use some because it returns the matching list."
+      },
+      {
+        "id": "d",
+        "text": "Use map without returning a value."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "find stops at the first match. filter returns all items that match the condition.",
+    "whyDevelopersMissThis": "They remember both methods are for searching arrays but forget one returns one item and the other returns many."
+  },
+  {
+    "id": "js-010",
+    "stack": "JavaScript",
+    "level": "Mid-level",
+    "category": "State Management",
+    "prompt": "Why can mutating an object in place cause missed UI updates in state-driven apps?",
+    "options": [
+      {
+        "id": "a",
+        "text": "The reference may not change, so shallow change checks can miss it."
+      },
+      {
+        "id": "b",
+        "text": "Objects cannot be rendered."
+      },
+      {
+        "id": "c",
+        "text": "Mutation always deletes nested properties."
+      },
+      {
+        "id": "d",
+        "text": "The JavaScript engine ignores mutated objects."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "Many UI libraries compare references. Immutable updates create a new reference to signal change.",
+    "whyDevelopersMissThis": "They see the object contents change in the debugger and assume the UI can detect that automatically."
+  },
+  {
+    "id": "js-011",
+    "stack": "JavaScript",
+    "level": "Junior",
+    "category": "API Handling",
+    "prompt": "A settings page shows 'Saved' even when the API returns a validation error. What should change?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Show success only after the response confirms the save worked."
+      },
+      {
+        "id": "b",
+        "text": "Show success immediately for every click."
+      },
+      {
+        "id": "c",
+        "text": "Hide validation errors to reduce noise."
+      },
+      {
+        "id": "d",
+        "text": "Retry forever without updating the UI."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "Success feedback must be tied to the actual outcome. Failed requests need recoverable error feedback.",
+    "whyDevelopersMissThis": "They wire success to the submit event instead of the request result."
+  },
+  {
+    "id": "js-012",
+    "stack": "JavaScript",
+    "level": "Mid-level",
+    "category": "API Handling",
+    "prompt": "A dashboard fetches user data, then fetches permissions using the user id. What request strategy is correct?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Fetch the user first, then fetch permissions after the id is known."
+      },
+      {
+        "id": "b",
+        "text": "Always fetch both at the same time."
+      },
+      {
+        "id": "c",
+        "text": "Fetch permissions before knowing the user."
+      },
+      {
+        "id": "d",
+        "text": "Use setInterval to guess when the user is ready."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "Dependent requests should be sequenced. Parallel requests are correct only when the data does not depend on earlier results.",
+    "whyDevelopersMissThis": "They learn that parallel requests are faster and apply it even when one request needs data from another."
+  },
+  {
+    "id": "js-013",
+    "stack": "JavaScript",
+    "level": "Senior",
+    "category": "API Handling",
+    "prompt": "A client automatically retries a failed payment request. Some users are charged twice. What design issue should be fixed?",
+    "options": [
+      {
+        "id": "a",
+        "text": "The write needs idempotency so retries cannot create duplicate charges."
+      },
+      {
+        "id": "b",
+        "text": "The retry delay should be shorter."
+      },
+      {
+        "id": "c",
+        "text": "The error message should be hidden."
+      },
+      {
+        "id": "d",
+        "text": "The payment button should use a different color."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "Retried write operations can duplicate side effects unless the backend treats repeated attempts as the same operation.",
+    "whyDevelopersMissThis": "Retry logic feels safe for reads, but writes need stronger guarantees."
+  },
+  {
+    "id": "js-014",
+    "stack": "JavaScript",
+    "level": "Mid-level",
+    "category": "State Management",
+    "prompt": "A checkout form stores subtotal, discount, tax, and total separately. Sometimes the total is wrong. What is the better state approach?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Store source values and derive the total from them."
+      },
+      {
+        "id": "b",
+        "text": "Store every calculated value and update them manually."
+      },
+      {
+        "id": "c",
+        "text": "Store the total only in localStorage."
+      },
+      {
+        "id": "d",
+        "text": "Recalculate only after a page reload."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "Derived values should usually be computed from source state. Storing derived state creates synchronization bugs.",
+    "whyDevelopersMissThis": "They store every value displayed on screen, even when some values are outputs of other state."
+  },
+  {
+    "id": "js-015",
+    "stack": "JavaScript",
+    "level": "Senior",
+    "category": "Architecture Tradeoffs",
+    "prompt": "Several screens copy the same date formatting logic, and one now shows a different format. What is the architectural fix?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Move formatting into a shared utility or formatter component."
+      },
+      {
+        "id": "b",
+        "text": "Copy the newest version into every file manually."
+      },
+      {
+        "id": "c",
+        "text": "Accept inconsistent formatting."
+      },
+      {
+        "id": "d",
+        "text": "Store formatted dates in CSS."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "Shared behavior should have a single source of truth to reduce drift and make future changes safer.",
+    "whyDevelopersMissThis": "Duplication feels faster until product rules change in more than one place."
+  }
+]

@@ -12,7 +12,9 @@ import {
   getDailyQuiz,
   getProfile,
   getQuizAnswers,
+  getReviewQueue,
   saveDailyResult,
+  saveQuestionForReview,
   saveQuizAnswer,
   subscribeToStorage,
 } from "@/lib/storage";
@@ -21,6 +23,7 @@ export default function QuizPage() {
   const router = useRouter();
   const profile = useSyncExternalStore(subscribeToStorage, getProfile, () => null);
   const quiz = useSyncExternalStore(subscribeToStorage, getDailyQuiz, () => null);
+  const reviewQueue = useSyncExternalStore(subscribeToStorage, getReviewQueue, () => []);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [selectedAnswerId, setSelectedAnswerId] = useState<string | null>(null);
   const [isAnswerChecked, setIsAnswerChecked] = useState(false);
@@ -34,6 +37,13 @@ export default function QuizPage() {
     : null;
   const activeAnswerId = selectedAnswerId ?? savedAnswerId;
   const activeAnswerChecked = isAnswerChecked || Boolean(savedAnswerId);
+  const savedQuestionIds = useMemo(
+    () => new Set(reviewQueue.map((item) => item.questionId)),
+    [reviewQueue],
+  );
+  const isCurrentQuestionSavedForReview = currentQuestion
+    ? savedQuestionIds.has(currentQuestion.id)
+    : false;
 
   useEffect(() => {
     if (!profile) {
@@ -81,6 +91,14 @@ export default function QuizPage() {
     router.push("/result");
   }
 
+  function handleSaveForReview() {
+    if (!currentQuestion) {
+      return;
+    }
+
+    saveQuestionForReview(currentQuestion.id);
+  }
+
   if (!profile || !quiz || !currentQuestion) {
     return (
       <AppShell eyebrow="Quiz">
@@ -100,8 +118,10 @@ export default function QuizPage() {
         <QuestionCard
           isAnswerChecked={activeAnswerChecked}
           isFinalQuestion={questionIndex === quizQuestions.length - 1}
+          isSavedForReview={isCurrentQuestionSavedForReview}
           onCheck={handleCheckAnswer}
           onNext={handleNext}
+          onSaveForReview={handleSaveForReview}
           onSelect={setSelectedAnswerId}
           question={currentQuestion}
           selectedAnswerId={activeAnswerId}

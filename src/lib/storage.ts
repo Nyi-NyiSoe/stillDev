@@ -5,6 +5,7 @@ import type {
   Profile,
   QuizAnswers,
   QuizResult,
+  ReviewQueueItem,
 } from "@/types/quiz";
 
 const STORAGE_KEYS = {
@@ -13,10 +14,12 @@ const STORAGE_KEYS = {
   answers: "stilldev.answers.v1",
   dailyResult: "stilldev.dailyResult.v1",
   history: "stilldev.history.v1",
+  reviewQueue: "stilldev.reviewQueue.v1",
 } as const;
 
 const EMPTY_ANSWERS: QuizAnswers = {};
 const EMPTY_HISTORY: DailyResultSummary[] = [];
+const EMPTY_REVIEW_QUEUE: ReviewQueueItem[] = [];
 const jsonCache = new Map<string, { raw: string; value: unknown }>();
 
 function readJson<T>(key: string): T | null {
@@ -100,6 +103,81 @@ export function saveDailyResult(result: QuizResult) {
 
 export function getHistory() {
   return readJson<DailyResultSummary[]>(STORAGE_KEYS.history) ?? EMPTY_HISTORY;
+}
+
+export function getReviewQueue() {
+  return readJson<ReviewQueueItem[]>(STORAGE_KEYS.reviewQueue) ?? EMPTY_REVIEW_QUEUE;
+}
+
+export function isQuestionSavedForReview(questionId: string) {
+  return getReviewQueue().some((item) => item.questionId === questionId);
+}
+
+export function saveQuestionForReview(questionId: string) {
+  const reviewQueue = getReviewQueue();
+
+  if (reviewQueue.some((item) => item.questionId === questionId)) {
+    return;
+  }
+
+  writeJson(STORAGE_KEYS.reviewQueue, [
+    {
+      questionId,
+      savedAt: new Date().toISOString(),
+    },
+    ...reviewQueue,
+  ]);
+}
+
+export function removeQuestionFromReview(questionId: string) {
+  writeJson(
+    STORAGE_KEYS.reviewQueue,
+    getReviewQueue().filter((item) => item.questionId !== questionId),
+  );
+}
+
+export function markQuestionReviewed(questionId: string) {
+  writeJson(
+    STORAGE_KEYS.reviewQueue,
+    getReviewQueue().map((item) =>
+      item.questionId === questionId
+        ? {
+            ...item,
+            reviewedAt: item.reviewedAt ?? new Date().toISOString(),
+          }
+        : item,
+    ),
+  );
+}
+
+export function restoreReviewQueueItems(items: ReviewQueueItem[]) {
+  const reviewQueue = getReviewQueue();
+  const existingQuestionIds = new Set(reviewQueue.map((item) => item.questionId));
+  const restoredItems = items.filter(
+    (item) => !existingQuestionIds.has(item.questionId),
+  );
+
+  if (restoredItems.length === 0) {
+    return;
+  }
+
+  writeJson(STORAGE_KEYS.reviewQueue, [...restoredItems, ...reviewQueue]);
+}
+
+export function removeReviewedQuestionsFromReview() {
+  const reviewQueue = getReviewQueue();
+  const reviewedItems = reviewQueue.filter((item) => item.reviewedAt);
+
+  if (reviewedItems.length === 0) {
+    return [];
+  }
+
+  writeJson(
+    STORAGE_KEYS.reviewQueue,
+    reviewQueue.filter((item) => !item.reviewedAt),
+  );
+
+  return reviewedItems;
 }
 
 function saveHistoryEntry(entry: DailyResultSummary) {
