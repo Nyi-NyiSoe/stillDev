@@ -58,6 +58,9 @@ export default function Home() {
               <ButtonLink className="sm:min-w-36" href="/history" variant="secondary">
                 View History
               </ButtonLink>
+              <ButtonLink className="sm:min-w-36" href="/review" variant="ghost">
+                Review Later
+              </ButtonLink>
             </div>
             <p className="mt-4 max-w-xl text-sm leading-6 text-zinc-400">
               No account or backend. Your profile, quiz, result, and history stay

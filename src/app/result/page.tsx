@@ -2,15 +2,25 @@
 
 import { useMemo, useSyncExternalStore } from "react";
 import { AppShell } from "@/components/AppShell";
-import { ButtonLink } from "@/components/Button";
+import { Button, ButtonLink } from "@/components/Button";
 import { Card } from "@/components/Card";
 import { ResultSummary } from "@/components/ResultSummary";
 import { getQuestionsByIds } from "@/lib/quiz";
-import { getDailyResult, subscribeToStorage } from "@/lib/storage";
+import {
+  getDailyResult,
+  getReviewQueue,
+  saveQuestionForReview,
+  subscribeToStorage,
+} from "@/lib/storage";
 import type { AnswerReview, QuestionCategory } from "@/types/quiz";
 
 export default function ResultPage() {
   const result = useSyncExternalStore(subscribeToStorage, getDailyResult, () => null);
+  const reviewQueue = useSyncExternalStore(subscribeToStorage, getReviewQueue, () => []);
+  const savedQuestionIds = useMemo(
+    () => new Set(reviewQueue.map((item) => item.questionId)),
+    [reviewQueue],
+  );
   const questions = useMemo(
     () => getQuestionsByIds(result?.answers.map((answer) => answer.questionId) ?? []),
     [result],
@@ -136,6 +146,19 @@ export default function ResultPage() {
                           <p className="mt-2 text-sm leading-6 text-zinc-400">
                             {question?.explanation}
                           </p>
+                          {question ? (
+                            <Button
+                              className="mt-3"
+                              disabled={savedQuestionIds.has(question.id)}
+                              onClick={() => saveQuestionForReview(question.id)}
+                              type="button"
+                              variant="secondary"
+                            >
+                              {savedQuestionIds.has(question.id)
+                                ? "Saved for Review"
+                                : "Review Later"}
+                            </Button>
+                          ) : null}
                         </div>
                       );
                     })}
@@ -200,6 +223,19 @@ export default function ResultPage() {
                       </p>
                     </div>
                   )}
+                  {question ? (
+                    <Button
+                      className="mt-3"
+                      disabled={savedQuestionIds.has(question.id)}
+                      onClick={() => saveQuestionForReview(question.id)}
+                      type="button"
+                      variant="secondary"
+                    >
+                      {savedQuestionIds.has(question.id)
+                        ? "Saved for Review"
+                        : "Review Later"}
+                    </Button>
+                  ) : null}
                 </div>
               );
             })}
@@ -208,6 +244,9 @@ export default function ResultPage() {
         <div className="flex flex-col gap-3 sm:flex-row">
           <ButtonLink href="/" variant="secondary">
             Back Home
+          </ButtonLink>
+          <ButtonLink href="/review" variant="secondary">
+            Review Later
           </ButtonLink>
           <ButtonLink href="/history">View History</ButtonLink>
         </div>

@@ -22,16 +22,13 @@ export type Profile = {
 };
 
 export type QuestionCategory =
-  | "Components"
-  | "State"
-  | "Effects"
-  | "JavaScript"
-  | "Async"
   | "Debugging"
+  | "State Management"
+  | "Async"
+  | "API Handling"
   | "Performance"
-  | "Flutter Widgets"
-  | "Dart"
-  | "Architecture";
+  | "UI/Layout"
+  | "Architecture Tradeoffs";
 
 export type QuestionDifficulty = "Beginner" | "Junior" | "Mid-level" | "Senior";
 
@@ -49,6 +46,7 @@ export type Question = {
   options: AnswerOption[];
   correctAnswerId: string;
   explanation: string;
+  whyDevelopersMissThis: string;
 };
 
 export type DailyQuiz = {
@@ -91,4 +89,10 @@ export type DailyResultSummary = {
   score: number;
   total: number;
   rank: Rank;
+};
+
+export type ReviewQueueItem = {
+  questionId: string;
+  savedAt: string;
+  reviewedAt?: string;
 };

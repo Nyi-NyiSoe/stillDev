@@ -1,0 +1,422 @@
+[
+  {
+    "id": "react-001",
+    "stack": "React",
+    "level": "Beginner",
+    "category": "UI/Layout",
+    "prompt": "A component renders a heading and a list. Adding the list causes an adjacent JSX elements error, but adding a div changes the page spacing. What fix keeps the DOM structure least changed?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Wrap the siblings in a fragment."
+      },
+      {
+        "id": "b",
+        "text": "Move the list into useEffect."
+      },
+      {
+        "id": "c",
+        "text": "Convert the component to a class."
+      },
+      {
+        "id": "d",
+        "text": "Make the component async."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "A fragment satisfies JSX's single-root requirement without adding an extra DOM element that can affect layout or selectors.",
+    "whyDevelopersMissThis": "They fix the compiler error with a div first, then miss the layout side effect introduced by that wrapper."
+  },
+  {
+    "id": "react-002",
+    "stack": "React",
+    "level": "Beginner",
+    "category": "State Management",
+    "prompt": "A counter calls setCount(count + 1) twice in the same click handler, but the count only increases by one. What should change?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Use setCount((current) => current + 1) for each update."
+      },
+      {
+        "id": "b",
+        "text": "Store count in a global variable."
+      },
+      {
+        "id": "c",
+        "text": "Call forceUpdate after setCount."
+      },
+      {
+        "id": "d",
+        "text": "Make the click handler async."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "Functional updates read the latest queued state, so repeated updates compose correctly within the same event.",
+    "whyDevelopersMissThis": "They expect state to change immediately after each setter call, but React batches updates."
+  },
+  {
+    "id": "react-003",
+    "stack": "React",
+    "level": "Junior",
+    "category": "State Management",
+    "prompt": "An effect fetches data for userId. After switching users, the screen still shows the previous user's data. What should you inspect first?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Whether userId is included in the effect dependency list."
+      },
+      {
+        "id": "b",
+        "text": "Whether the component has a display name."
+      },
+      {
+        "id": "c",
+        "text": "Whether localStorage is cleared on render."
+      },
+      {
+        "id": "d",
+        "text": "Whether the fetch call is inside a fragment."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "Effects capture values from their render. Dependencies keep the effect synchronized when inputs like userId change.",
+    "whyDevelopersMissThis": "The first load works, so the missing dependency only appears when the user changes context."
+  },
+  {
+    "id": "react-004",
+    "stack": "React",
+    "level": "Junior",
+    "category": "Debugging",
+    "prompt": "A list renders correctly, but input focus jumps between rows after sorting. What is the likely cause?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Array index is being used as the key."
+      },
+      {
+        "id": "b",
+        "text": "The list has too many items."
+      },
+      {
+        "id": "c",
+        "text": "The inputs need placeholder text."
+      },
+      {
+        "id": "d",
+        "text": "The sort function must run in CSS."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "Index keys do not identify stable items after reordering, so React can reuse DOM state for the wrong row.",
+    "whyDevelopersMissThis": "Index keys look harmless until rows are inserted, removed, filtered, or sorted."
+  },
+  {
+    "id": "react-005",
+    "stack": "React",
+    "level": "Mid-level",
+    "category": "Performance",
+    "prompt": "A memoized child still rerenders on every parent render because it receives an inline object prop. What is the practical fix?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Memoize the object or pass stable primitive props."
+      },
+      {
+        "id": "b",
+        "text": "Remove React.memo from every child."
+      },
+      {
+        "id": "c",
+        "text": "Put the object in localStorage."
+      },
+      {
+        "id": "d",
+        "text": "Turn the child into a server component."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "Inline objects get a new reference every render, so shallow memo checks see them as changed.",
+    "whyDevelopersMissThis": "They memoize the child but forget that unstable props can invalidate the memo every time."
+  },
+  {
+    "id": "react-006",
+    "stack": "React",
+    "level": "Mid-level",
+    "category": "State Management",
+    "prompt": "A form tracks country, state, shipping method, and validation. Changing country should reset the other fields, but stale values remain. What state design reduces this bug?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Use grouped state or a reducer that updates dependent fields together."
+      },
+      {
+        "id": "b",
+        "text": "Store each keystroke in a separate localStorage key."
+      },
+      {
+        "id": "c",
+        "text": "Use one effect per input and let them race."
+      },
+      {
+        "id": "d",
+        "text": "Keep dependent fields in module-level variables."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "Related fields need coordinated transitions. Grouped updates make invalid combinations harder to leave behind.",
+    "whyDevelopersMissThis": "They split state by input because it feels simple, then forget how fields depend on each other."
+  },
+  {
+    "id": "react-007",
+    "stack": "React",
+    "level": "Senior",
+    "category": "Architecture Tradeoffs",
+    "prompt": "A shared input works in simple screens but cannot integrate with a parent form library that controls field values. What API change makes it more reusable?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Support value, defaultValue, and onChange so parents can control it when needed."
+      },
+      {
+        "id": "b",
+        "text": "Always ignore incoming value props."
+      },
+      {
+        "id": "c",
+        "text": "Require consumers to edit the component source."
+      },
+      {
+        "id": "d",
+        "text": "Read the current value with document.querySelector."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "Reusable inputs often need both controlled and uncontrolled usage so state can live inside or outside the component.",
+    "whyDevelopersMissThis": "They design for the first use case and accidentally block common integration paths later."
+  },
+  {
+    "id": "react-008",
+    "stack": "React",
+    "level": "Senior",
+    "category": "State Management",
+    "prompt": "An effect subscribes to an event emitter. After navigating away and back, each event appears twice. What is likely missing?",
+    "options": [
+      {
+        "id": "a",
+        "text": "A cleanup function that unsubscribes."
+      },
+      {
+        "id": "b",
+        "text": "A new emitter for every render."
+      },
+      {
+        "id": "c",
+        "text": "A Promise returned from the component."
+      },
+      {
+        "id": "d",
+        "text": "A timeout before setting state."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "Subscriptions are external resources. Cleanup prevents duplicate listeners and leaks across renders or unmounts.",
+    "whyDevelopersMissThis": "The bug often appears only after repeated navigation, not on the first happy-path test."
+  },
+  {
+    "id": "react-009",
+    "stack": "React",
+    "level": "Junior",
+    "category": "UI/Layout",
+    "prompt": "Clicking a menu button inside a form submits the form before the menu opens. What is the root cause?",
+    "options": [
+      {
+        "id": "a",
+        "text": "A button inside a form defaults to submit unless its type is set."
+      },
+      {
+        "id": "b",
+        "text": "React batches click events incorrectly."
+      },
+      {
+        "id": "c",
+        "text": "Menus must use aria-hidden before opening."
+      },
+      {
+        "id": "d",
+        "text": "The form needs a CSS reset."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "Native browser button defaults still apply in React. Non-submit form buttons need type=\"button\".",
+    "whyDevelopersMissThis": "Component abstractions make it easy to forget the underlying browser behavior."
+  },
+  {
+    "id": "react-010",
+    "stack": "React",
+    "level": "Mid-level",
+    "category": "Debugging",
+    "prompt": "Hydration warnings appear because the initial render reads Date.now(). What is the core issue?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Server and client rendered different initial output."
+      },
+      {
+        "id": "b",
+        "text": "The component needs more CSS."
+      },
+      {
+        "id": "c",
+        "text": "Date.now() only works in class components."
+      },
+      {
+        "id": "d",
+        "text": "React cannot render numbers."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "Hydration expects matching markup. Time-dependent values can differ between server render and client render.",
+    "whyDevelopersMissThis": "They debug the warning as a rendering glitch instead of checking whether the first server and client outputs match."
+  },
+  {
+    "id": "react-011",
+    "stack": "React",
+    "level": "Mid-level",
+    "category": "Async",
+    "prompt": "A user types quickly in a search box. Results for an older query sometimes replace the newer results. What should you guard against?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Older async responses overwriting the latest request state."
+      },
+      {
+        "id": "b",
+        "text": "The input having too many characters."
+      },
+      {
+        "id": "c",
+        "text": "The search button being below the input."
+      },
+      {
+        "id": "d",
+        "text": "The component using too many fragments."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "Overlapping requests can resolve out of order. The UI should ignore stale responses or cancel previous requests.",
+    "whyDevelopersMissThis": "They test one query at a time, while real users type and edit quickly."
+  },
+  {
+    "id": "react-012",
+    "stack": "React",
+    "level": "Junior",
+    "category": "API Handling",
+    "prompt": "A page briefly shows 'No results' before fetched results appear. What state is missing?",
+    "options": [
+      {
+        "id": "a",
+        "text": "A loading state separate from the empty state."
+      },
+      {
+        "id": "b",
+        "text": "A larger empty-state icon."
+      },
+      {
+        "id": "c",
+        "text": "A random delay before rendering."
+      },
+      {
+        "id": "d",
+        "text": "A second empty array for backup results."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "Loading and empty are different states. The UI should not claim there are no results until the request has completed.",
+    "whyDevelopersMissThis": "They initialize results to an empty array and treat it as final data too early."
+  },
+  {
+    "id": "react-013",
+    "stack": "React",
+    "level": "Mid-level",
+    "category": "API Handling",
+    "prompt": "A Save button can be clicked multiple times during a slow request, creating duplicate records. What should the UI do first?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Disable or guard the submit action while the request is in flight."
+      },
+      {
+        "id": "b",
+        "text": "Clear the form before the request finishes."
+      },
+      {
+        "id": "c",
+        "text": "Hide all error messages."
+      },
+      {
+        "id": "d",
+        "text": "Make the button label shorter."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "The UI should prevent duplicate submissions during pending writes. Important writes should also be protected server-side.",
+    "whyDevelopersMissThis": "They assume users click once, but slow networks lead to double clicks and retries."
+  },
+  {
+    "id": "react-014",
+    "stack": "React",
+    "level": "Mid-level",
+    "category": "Performance",
+    "prompt": "Typing in a filter input lags because a large list is filtered on every keystroke. What is a practical mitigation?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Debounce the input or memoize the filtered result."
+      },
+      {
+        "id": "b",
+        "text": "Store every keystroke in localStorage."
+      },
+      {
+        "id": "c",
+        "text": "Disable the input after one character."
+      },
+      {
+        "id": "d",
+        "text": "Move the filter label below the field."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "Expensive work should be limited or cached when inputs change frequently.",
+    "whyDevelopersMissThis": "The feature feels fine with small development data and only slows down with realistic list sizes."
+  },
+  {
+    "id": "react-015",
+    "stack": "React",
+    "level": "Senior",
+    "category": "Debugging",
+    "prompt": "A modal opens for one item. After selecting a different item, the modal still shows the previous item's details. What should you check?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Whether selected item state is updated each time the modal opens."
+      },
+      {
+        "id": "b",
+        "text": "Whether the modal shadow is strong enough."
+      },
+      {
+        "id": "c",
+        "text": "Whether the close button is at the top."
+      },
+      {
+        "id": "d",
+        "text": "Whether the list uses a CSS grid."
+      }
+    ],
+    "correctAnswerId": "a",
+    "explanation": "Modal content usually depends on selected item state. Stale selected state makes the modal show the wrong record.",
+    "whyDevelopersMissThis": "They test opening the modal once, not switching between items in the same session."
+  }
+]

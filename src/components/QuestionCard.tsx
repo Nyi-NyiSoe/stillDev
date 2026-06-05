@@ -7,9 +7,11 @@ type QuestionCardProps = {
   selectedAnswerId: string | null;
   isAnswerChecked: boolean;
   isFinalQuestion: boolean;
+  isSavedForReview: boolean;
   onCheck: () => void;
   onSelect: (answerId: string) => void;
   onNext: () => void;
+  onSaveForReview: () => void;
 };
 
 export function QuestionCard({
@@ -17,9 +19,11 @@ export function QuestionCard({
   selectedAnswerId,
   isAnswerChecked,
   isFinalQuestion,
+  isSavedForReview,
   onCheck,
   onSelect,
   onNext,
+  onSaveForReview,
 }: QuestionCardProps) {
   return (
     <Card>
@@ -86,14 +90,30 @@ export function QuestionCard({
               <p className="mt-2 text-sm leading-6 text-zinc-300">
                 {question.explanation}
               </p>
+              <p className="mt-4 text-xs font-semibold text-emerald-300">
+                Why developers miss this
+              </p>
+              <p className="mt-2 text-sm leading-6 text-zinc-300">
+                {question.whyDevelopersMissThis}
+              </p>
             </div>
           </div>
         ) : null}
 
         {isAnswerChecked ? (
-          <Button onClick={onNext} type="button">
-            {isFinalQuestion ? "Finish Warm-up" : "Next Question"}
-          </Button>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <Button onClick={onNext} type="button">
+              {isFinalQuestion ? "Finish Warm-up" : "Next Question"}
+            </Button>
+            <Button
+              disabled={isSavedForReview}
+              onClick={onSaveForReview}
+              type="button"
+              variant="secondary"
+            >
+              {isSavedForReview ? "Saved for Review" : "Review Later"}
+            </Button>
+          </div>
         ) : (
           <Button disabled={!selectedAnswerId} onClick={onCheck} type="button">
             Check Answer
